@@ -1,0 +1,15 @@
+.idea/
+.vscode/
+.git-old
+node_modules
+dist
+buid/
+temp/
+.env
+coverage
+ormconfig.json
+credentials.csv
+
+tmp/*
+!tmp/.gitkeep
+
