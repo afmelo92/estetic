@@ -1,0 +1,32 @@
+import { getRepository, Repository } from 'typeorm';
+
+import IUserRepository from '@modules/users/repositories/IUsersRepository';
+import ICreateUserDTO from '@modules/users/dtos/ICreateUsersDTO';
+
+import User from '../entities/User';
+
+class UsersRepository implements IUserRepository {
+  private ormRepository: Repository<User>;
+
+  constructor() {
+    this.ormRepository = getRepository(User);
+  }
+
+  public async create({
+    name,
+    email,
+    password,
+  }: ICreateUserDTO): Promise<User> {
+    const user = this.ormRepository.create({ name, email, password });
+
+    await this.ormRepository.save(user);
+
+    return user;
+  }
+
+  public async save(user: User): Promise<User> {
+    return this.ormRepository.save(user);
+  }
+}
+
+export default UsersRepository;
