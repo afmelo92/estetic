@@ -6,13 +6,14 @@ import { parseISO } from 'date-fns';
 
 export default class AppointmentController {
   public async create(request: Request, response: Response): Promise<Response> {
-    const { provider, date } = request.body;
+    const { provider_id, date } = request.body;
 
+    const parsedDate = parseISO(date);
     const createAppointment = container.resolve(CreateAppointmentService);
 
     const appointment = await createAppointment.execute({
-      provider,
-      date: parseISO(date),
+      provider_id,
+      date: parsedDate,
     });
 
     return response.json(appointment);
