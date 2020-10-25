@@ -10,4 +10,8 @@ providersRouter.use(ensureAuthenticated);
 
 providersRouter.get('/', providersController.index);
 
+providersRouter.get('/:provider_id/month-availability', (request, response) => {
+  return response.json({ ok: true });
+});
+
 export default providersRouter;
