@@ -9,6 +9,8 @@ import {
   ManyToOne,
   JoinColumn,
 } from 'typeorm';
+import Category from './Category';
+import Service from './Service';
 
 @Entity('appointments')
 class Appointment {
@@ -28,6 +30,20 @@ class Appointment {
   @ManyToOne(() => User)
   @JoinColumn({ name: 'user_id' })
   user: User;
+
+  @Column()
+  category_id: string;
+
+  @ManyToOne(() => Category)
+  @JoinColumn({name: 'category_id'})
+  category: Category;
+
+  @Column()
+  service_id: string;
+
+  @ManyToOne(() => Service)
+  @JoinColumn({name: 'service_id'})
+  service: Service;
 
   @Column('timestamp with time zone')
   date: Date;
