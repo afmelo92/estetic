@@ -24,6 +24,12 @@ class ServicesRepository implements IServicesRepository {
     return service;
   }
 
+  public async findById(id: string): Promise<Service | undefined> {
+    const service = await this.ormRepository.findOne(id);
+
+    return service;
+  }
+
   public async findAll(): Promise<Service[]> {
     const services = await this.ormRepository.find();
 

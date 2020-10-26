@@ -7,11 +7,13 @@ import IAppointmentRepository from '@modules/appointments/repositories/IAppointm
 import IUsersRepository from '@modules/users/repositories/IUsersRepository';
 import INotificationsRepository from '@modules/notifications/repositories/INotificationsRepository';
 import Appointment from '../infra/typeorm/entities/Appointment';
+import IServicesRepository from '../repositories/IServicesRepository';
 
 interface IRequest {
   provider_id: string;
   date: Date;
   user_id: string;
+  service_id: string;
 }
 
 @injectable()
@@ -23,6 +25,9 @@ class CreateAppointmentService {
     @inject('UsersRepository')
     private usersRepository: IUsersRepository,
 
+    @inject('ServicesRepository')
+    private servicesRepository: IServicesRepository,
+
     @inject('NotificationsRepository')
     private notificationsRepository: INotificationsRepository,
   ) {}
@@ -31,6 +36,7 @@ class CreateAppointmentService {
     provider_id,
     user_id,
     date,
+    service_id,
   }: IRequest): Promise<Appointment> {
     const appointmentDate = startOfHour(date);
 
@@ -39,6 +45,12 @@ class CreateAppointmentService {
     );
 
     if (!checkProviderExists) throw new AppError('Provider not found.');
+
+    const checkServiceExists = await this.servicesRepository.findById(
+      service_id,
+    );
+
+    if (!checkServiceExists) throw new AppError('Service not found');
 
     const findAppointmentsInSameDate = await this.appointmentsRepository.findByDate(
       appointmentDate,
@@ -61,13 +73,14 @@ class CreateAppointmentService {
       provider_id,
       user_id,
       date: appointmentDate,
+      service_id,
     });
 
     const formattedDate = format(appointmentDate, "dd/MM/yyyy 'às' HH:mm'h'");
 
     await this.notificationsRepository.create({
       recipient_id: provider_id,
-      content: `Novo agendamento para dia ${formattedDate}`,
+      content: `Novo agendamento de ${checkServiceExists.name} para dia ${formattedDate}`,
     });
 
     return appointment;

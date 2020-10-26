@@ -18,6 +18,9 @@ class Service {
   name: string;
 
   @Column()
+  price: number;
+
+  @Column()
   category_id: string;
 
   @OneToOne(() => Category)
