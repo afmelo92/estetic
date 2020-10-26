@@ -2,9 +2,12 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
+  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import Category from './Category';
 
 @Entity('services')
 class Service {
@@ -13,6 +16,13 @@ class Service {
 
   @Column()
   name: string;
+
+  @Column()
+  category_id: string;
+
+  @OneToOne(() => Category)
+  @JoinColumn({ name: 'category_id' })
+  category: Category;
 
   @CreateDateColumn()
   created_at: Date;

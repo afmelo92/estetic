@@ -18,6 +18,9 @@ import NotificationsRepository from '@modules/notifications/infra/typeorm/reposi
 import ICategoriesRepository from '@modules/appointments/repositories/ICategoriesRepository';
 import CategoriesRepository from '@modules/appointments/infra/typeorm/repositories/CategoriesRepository';
 
+import IServicesRepository from '@modules/appointments/repositories/IServicesRepository';
+import ServicesRepository from '@modules/appointments/infra/typeorm/repositories/ServicesRepository';
+
 container.registerSingleton<IAppointmentsRepository>(
   'AppointmentsRepository',
   AppointmentsRepository,
@@ -41,4 +44,9 @@ container.registerSingleton<INotificationsRepository>(
 container.registerSingleton<ICategoriesRepository>(
   'CategoriesRepository',
   CategoriesRepository,
+);
+
+container.registerSingleton<IServicesRepository>(
+  'ServicesRepository',
+  ServicesRepository,
 );

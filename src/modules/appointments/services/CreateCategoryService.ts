@@ -15,9 +15,7 @@ class CreateCategoryService {
       name,
     );
 
-    if (checkCategoryExists) {
-      throw new AppError('Category already exists');
-    }
+    if (checkCategoryExists) throw new AppError('Category already exists');
 
     const category = await this.categoriesRepository.create(name);
 
