@@ -45,7 +45,7 @@ export default {
   config: {
     disk: {},
     aws: {
-      bucket: 'app-smartsim',
+      bucket: process.env.BUCKET,
     },
   },
 } as IUploadConfig;
