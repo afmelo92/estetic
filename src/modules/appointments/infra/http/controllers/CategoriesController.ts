@@ -3,6 +3,7 @@ import { container } from 'tsyringe';
 
 import CreateCategoryService from '@modules/appointments/services/CreateCategoryService';
 import ListCategoriesService from '@modules/appointments/services/ListCategoriesService';
+import { classToClass } from 'class-transformer';
 
 export default class CategoriesController {
   public async create(request: Request, response: Response): Promise<Response> {
@@ -12,7 +13,7 @@ export default class CategoriesController {
 
     const category = await createCategory.execute(name);
 
-    return response.json(category);
+    return response.json(classToClass(category));
   }
 
   public async index(request: Request, response: Response): Promise<Response> {
@@ -20,6 +21,6 @@ export default class CategoriesController {
 
     const categories = await listCategories.execute();
 
-    return response.json(categories);
+    return response.json(classToClass(categories));
   }
 }

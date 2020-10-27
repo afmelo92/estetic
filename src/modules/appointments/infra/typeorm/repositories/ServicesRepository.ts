@@ -13,10 +13,12 @@ class ServicesRepository implements IServicesRepository {
   public async create({
     category_id,
     name,
+    price,
   }: ICreateServiceDTO): Promise<Service> {
     const service = this.ormRepository.create({
       category_id,
       name,
+      price,
     });
 
     await this.ormRepository.save(service);
